@@ -98,8 +98,8 @@ class HydroShareCallbackHandler(OAuthCallbackHandler, HydroShareMixin):
             if os.path.exists(redirect_file):
                 with open(redirect_file,'r') as f:
                     u = f.read().strip()
-                    os.remove(redirect_file)
                 self.log.info('HydroShareCallbackHandler, redirecting to: %s' % u)
+                os.remove(redirect_file)
                 self.redirect(u)
             else:
                 self.redirect(welcome_page)
