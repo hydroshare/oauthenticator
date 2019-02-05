@@ -50,7 +50,7 @@ class HydroShareLoginHandler(OAuthLoginHandler, HydroShareMixin):
             )
         )
         redirect_uri = self.authenticator.oauth_callback_url or guess_uri
-        self.log.debug('HydroShareLoginHandler, oauth redirect: %r', redirect_uri)
+        self.log.info('HydroShareLoginHandler, oauth redirect: %r', redirect_uri)
         
         self.authorize_redirect(
             redirect_uri=redirect_uri,
@@ -68,7 +68,7 @@ class HydroShareLoginHandler(OAuthLoginHandler, HydroShareMixin):
             path=clean_url
         )
 
-        self.log.debug('HydroShareLoginHandler, next url: ' + redirect_url)
+        self.log.info('HydroShareLoginHandler, next url: ' + redirect_url)
 
         # save this url path so that it can be accessed in the CallbackHandler
         global next_url
@@ -115,7 +115,7 @@ class HydroShareOAuthenticator(OAuthenticator):
     @gen.coroutine
     def authenticate(self, handler, data=None):
         code = handler.get_argument("code", False)
-        self.log.debug('HydroShareCallbackHandler, code: ' + code)
+        self.log.info('HydroShareCallbackHandler, code: ' + code)
         if not code:
             raise web.HTTPError(400, "oauth callback made without a token")
 
@@ -134,7 +134,7 @@ class HydroShareOAuthenticator(OAuthenticator):
                         'https://www.hydroshare.org/o/token/',
                          params)
 
-        self.log.debug('HydroShareCallbackHandler, url: '+str(url))
+        self.log.info('HydroShareCallbackHandler, url: '+str(url))
 
         req = HTTPRequest(url,method="POST",body='', headers={"Accept": "application/json"}, validate_cert=False,)
 
