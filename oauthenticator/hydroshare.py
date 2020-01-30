@@ -126,7 +126,6 @@ class HydroShareOAuthenticator(OAuthenticator):
             grant_type='authorization_code',
             code=code,
             client_id=self.client_id,
-            client_secret=self.client_secret,
             redirect_uri=self.oauth_callback_url,
         )
 
@@ -136,11 +135,17 @@ class HydroShareOAuthenticator(OAuthenticator):
 
         self.log.debug('HydroShareCallbackHandler, url: '+str(url))
 
-        req = HTTPRequest(url,method="POST",body='', headers={"Accept": "application/json"}, validate_cert=False,)
+        req = HTTPRequest(url,
+                          method="POST",
+                          body='',
+                          headers={"Accept": "application/json",
+                          'client_secret': self.client_secret},
+                          validate_cert=False,)
 
         resp = yield http_client.fetch(req)
 
-        token_dict = json.loads(resp.body.decode('utf8', 'replace'))
+        token_dict = json.loads(resp.body.decode('utf8',
+                                                 'replace'))
 
         self.log.debug('HydroShareCallbackHandler, response json: ' + str(token_dict))
 
