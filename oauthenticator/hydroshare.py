@@ -32,7 +32,7 @@ import pickle
 next_url = None
     
 class HydroShareMixin(OAuth2Mixin):
-    _OAUTH_AUTHORIZE_URL = 'https://www.hydroshare.org/o/authorize'
+    _OAUTH_AUTHORIZE_URL = 'https://www.hydroshare.org/o/groupauthorize/156'
     _OAUTH_ACCESS_TOKEN_URL = 'https://www.hydroshare.org/o/token'
 
 
